@@ -12,6 +12,7 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, ".envs", ".env.local"))
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+SUPERUSER_TELEGRAM_ID = env.int("SUPERUSER_TELEGRAM_ID")
 
 
 INSTALLED_APPS = [
@@ -63,6 +64,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "users.UserBase"
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -80,7 +83,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
