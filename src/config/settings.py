@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     # Project's Apps
     "apps.users.apps.UsersConfig",
+    "apps.students.apps.StudentsConfig",
 
 ]
 
