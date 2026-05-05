@@ -12,8 +12,8 @@ class TelegramGroup(models.Model):
         AFTERNOON_2 = '16:00', '16:00'
     
 
-    days = models.CharField(max_length=4, choices=DayType.choices)
-    time = models.CharField(max_length=5, choices=TimeSlot.choices)
+    days = models.CharField(_("Lesson Days"), max_length=4, choices=DayType.choices)
+    time = models.CharField(_("Lesson Time"), max_length=5, choices=TimeSlot.choices)
 
     telegram_group_id = models.BigIntegerField(
         _("Telegram Group ID"),
@@ -24,13 +24,13 @@ class TelegramGroup(models.Model):
     is_active = models.BooleanField(_("Is Active"), default=True)
     is_full = models.BooleanField(_("Is Full"), default=False, editable=False)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
         db_table = 'telegram_group'
-        verbose_name = 'Telegram group'
-        verbose_name_plural = 'Telegram groups'
+        verbose_name = _("Telegram Group")
+        verbose_name_plural = _("Telegram Groups")
 
 
     def __str__(self):
