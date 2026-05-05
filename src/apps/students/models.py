@@ -36,3 +36,58 @@ class TelegramGroup(models.Model):
     def __str__(self):
         return f"{self.days} ({self.time})"
 
+
+
+class Student(models.Model):
+    user = models.OneToOneField(
+        "users.UserBase",
+        on_delete=models.CASCADE,
+        related_name="student_profile",
+        verbose_name=_("User Account")
+    )
+
+    group = models.ForeignKey(
+        'students.TelegramGroup',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="students",
+        verbose_name=_("Class Group")
+    )
+
+    # GitHub profile
+    github_username = models.CharField(
+        _("GitHub Username"),
+        max_length=100, 
+        unique=True
+        )
+    github_avatar_url = models.URLField(_("Avatar URL"), blank=True)
+    github_profile_url = models.URLField(_("Profile URL"), blank=True)
+    github_last_synced = models.DateTimeField(
+        _("Last Synced with GitHub"), 
+        null=True, 
+        blank=True
+    )
+
+    # Parent Info
+    parent_full_name = models.CharField(_("Parent Full Name"), max_length=200, blank=True)
+    parent_telegram_id = models.BigIntegerField(
+        _("Parent Telegram ID"), 
+        null=True, 
+        blank=True
+    )
+    is_parent_verified = models.BooleanField(_("Is Parent Verified"), default=False)
+
+    class Meta:
+        verbose_name = _("Student")
+        verbose_name_plural = _("Students")
+
+
+    def __str__(self):
+        return "Student"
+
+
+
+
+
+
+
