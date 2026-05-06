@@ -14,6 +14,11 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 SUPERUSER_TELEGRAM_ID = env.int("SUPERUSER_TELEGRAM_ID")
 
+WEBHOOK_HOST = env("WEBHOOK_HOST")
+BOT_TOKEN = env("BOT_TOKEN")
+WEBHOOK_PATH = f"webhook/{BOT_TOKEN}"
+WEBHOOK_URL = WEBHOOK_HOST + "/" + WEBHOOK_PATH
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
