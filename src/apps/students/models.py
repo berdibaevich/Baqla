@@ -23,6 +23,12 @@ class TelegramGroup(models.Model):
     # Status
     is_active = models.BooleanField(_("Is Active"), default=True)
     is_full = models.BooleanField(_("Is Full"), default=False, editable=False)
+    
+    is_fully_registered = models.BooleanField(
+        _("Is Fully Registered"),
+        default=False,
+        help_text="Barliq oqiwshi hám ata-analar toliq dizimnen ótken be?"
+    )
 
     created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
