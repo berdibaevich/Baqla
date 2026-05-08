@@ -24,8 +24,8 @@ class TelegramGroup(models.Model):
     is_active = models.BooleanField(_("Is Active"), default=True)
     is_full = models.BooleanField(_("Is Full"), default=False, editable=False)
     
-    is_fully_registered = models.BooleanField(
-        _("Is Fully Registered"),
+    is_active_group = models.BooleanField(
+        _("Is Active Group"),
         default=False,
         help_text="Barliq oqiwshi hám ata-analar toliq dizimnen ótken be?"
     )
