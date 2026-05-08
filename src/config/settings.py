@@ -6,6 +6,8 @@ env = environ.Env(
     DEBUG=(bool, False),
 )
 
+# uv run uvicorn config.asgi:application --reload
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR.parent, ".envs", ".env.local"))
 
@@ -97,5 +99,6 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'assets/static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

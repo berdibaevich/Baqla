@@ -10,3 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(settings.WEBHOOK_PATH, webhook.telegram, name="tg_webhook"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
