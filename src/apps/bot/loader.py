@@ -6,5 +6,8 @@ dp = Dispatcher()
 
 
 def setup_routers(dp: Dispatcher):
-    from .handlers import user_private_router
-    dp.include_routers(user_private_router,)
+    from .handlers import user_private_router, student_private_router
+    dp.include_routers(
+        user_private_router,
+        student_private_router
+    )
