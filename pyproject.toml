@@ -8,5 +8,6 @@ dependencies = [
     "aiogram>=3.27.0",
     "django==5.2",
     "django-environ>=0.13.0",
+    "redis[hiredis]>=7.4.0",
     "uvicorn>=0.46.0",
 ]

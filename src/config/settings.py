@@ -21,6 +21,10 @@ BOT_TOKEN = env("BOT_TOKEN")
 WEBHOOK_PATH = f"webhook/{BOT_TOKEN}"
 WEBHOOK_URL = WEBHOOK_HOST + "/" + WEBHOOK_PATH
 
+REDIS_HOST = env("REDIS_HOST")
+REDIS_PORT = env.int("REDIS_PORT")
+REDIS_PASSWORD = env("REDIS_PASSWORD")
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
