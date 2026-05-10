@@ -10,20 +10,15 @@ from ..callback import (
 from utils import format_group_name
 
 
-def get_role_ik() -> InlineKeyboardMarkup:
+def get_student_reg_ik() -> InlineKeyboardMarkup:
+    """Student Registration Inline Keyboard"""
     builder = InlineKeyboardBuilder()
     
     builder.button(
-        text="Oqiwshi",
+        text="Oqiwshi bolip dizimnen ótiw",
         callback_data=RoleCbData(action=UserAction.SELECT, role="student"),
-        style="primary"
-    )
-    builder.button(
-        text="Ata-ana",
-        callback_data=RoleCbData(action=UserAction.SELECT, role="parent"),
         style="success"
     )
-    builder.adjust(2)
     return builder.as_markup()
 
 
