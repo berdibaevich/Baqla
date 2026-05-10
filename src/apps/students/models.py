@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
 
 
@@ -21,9 +22,7 @@ class TelegramGroup(models.Model):
     )
 
     # Status
-    is_active = models.BooleanField(_("Is Active"), default=True)
     is_full = models.BooleanField(_("Is Full"), default=False, editable=False)
-    
     is_active_group = models.BooleanField(
         _("Is Active Group"),
         default=False,
@@ -38,9 +37,16 @@ class TelegramGroup(models.Model):
         verbose_name = _("Telegram Group")
         verbose_name_plural = _("Telegram Groups")
 
+        constraints = [
+            UniqueConstraint(
+                fields=['days', 'time'], 
+                name='unique_days_time_slot'
+            )
+        ]
+
 
     def __str__(self):
-        return f"{self.days} ({self.time})"
+        return f"{self.get_days_display()} ({self.time})"
 
 
 
