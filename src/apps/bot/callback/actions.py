@@ -3,9 +3,9 @@ from aiogram.filters.callback_data import CallbackData
 
 
 class UserAction(Enum):
-    role_student = "role_student"
-    role_parent = "role_parent"
+    SELECT = "select"
 
 
-class UserCbData(CallbackData, prefix = "user"):
+class RoleCbData(CallbackData, prefix="role"):
     action: UserAction
+    role: str

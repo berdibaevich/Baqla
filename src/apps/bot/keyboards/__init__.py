@@ -4,5 +4,4 @@ from .inline import (
 
 __all__ = (
     "get_role_ik",
-    
 )

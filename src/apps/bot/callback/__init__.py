@@ -1,9 +1,9 @@
 from .actions import (
     UserAction,
-    UserCbData
+    RoleCbData
 )
 
 __all__ = (
     "UserAction",
-    "UserCbData"
+    "RoleCbData"
 )
