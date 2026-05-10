@@ -51,12 +51,13 @@ class TelegramGroup(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(
-        "users.UserBase",
-        on_delete=models.CASCADE,
-        related_name="student_profile",
-        verbose_name=_("User Account")
-    )
+    class Gender(models.TextChoices):
+        MALE = 'MALE', _('Male')
+        FEMALE = 'FEMALE', _('Female')
+        NOT_SET = 'NOT_SET', _('Not Set')
+
+    telegram_id = models.PositiveBigIntegerField(_("Telegram ID"), unique=True, null=False, db_index=True)
+    full_name = models.CharField(_("Full Name"), max_length=255)
 
     group = models.ForeignKey(
         'students.TelegramGroup',
@@ -64,6 +65,33 @@ class Student(models.Model):
         null=True,
         related_name="students",
         verbose_name=_("Class Group")
+    )
+
+    gender = models.CharField(
+        _("Gender"),
+        max_length=10,
+        choices=Gender.choices,
+        default=Gender.NOT_SET
+    )
+
+    phone_number = models.CharField(
+        _("Phone Number"), 
+        unique=True,
+        max_length=13, 
+        blank=True, 
+        null=True
+    )
+
+    status = models.CharField(
+        _("Status"),
+        max_length=15, 
+        choices=[
+            ('pending', _('Pending')), 
+            ('rejected', _('Rejected')), 
+            ('approved', _('Approved')),
+            ('inactive', _('Inactive')) # Kurstan shıqqanlar (Qoyǵanlar)
+        ],
+        default='pending'
     )
 
     # GitHub profile
@@ -81,13 +109,24 @@ class Student(models.Model):
     )
 
     # Parent Info
-    parent_full_name = models.CharField(_("Parent Full Name"), max_length=200, blank=True)
+    parent_name = models.CharField(_("Parent Name"), max_length=20, blank=True)
+    parent_phone_number = models.CharField(
+        _("Parent Phone Number"),
+        unique=True,
+        max_length=13, 
+        blank=True, 
+        null=True
+    )
     parent_telegram_id = models.BigIntegerField(
         _("Parent Telegram ID"), 
         null=True, 
         blank=True
     )
     is_parent_verified = models.BooleanField(_("Is Parent Verified"), default=False)
+
+    created_at = models.DateTimeField(_("Created At"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
+
 
     class Meta:
         verbose_name = _("Student")
@@ -96,10 +135,3 @@ class Student(models.Model):
 
     def __str__(self):
         return "Student"
-
-
-
-
-
-
-
