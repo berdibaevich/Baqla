@@ -9,3 +9,8 @@ class UserAction(Enum):
 class RoleCbData(CallbackData, prefix="role"):
     action: UserAction
     role: str
+
+
+class GroupCbData(CallbackData, prefix="group"):
+    action: UserAction
+    id: int
