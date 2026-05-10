@@ -22,7 +22,7 @@ class TelegramGroup(models.Model):
     )
 
     # Status
-    is_full = models.BooleanField(_("Is Full"), default=False, editable=False)
+    is_full = models.BooleanField(_("Is Full"), default=False)
     is_active_group = models.BooleanField(
         _("Is Active Group"),
         default=False,
