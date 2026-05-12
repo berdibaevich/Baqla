@@ -1,3 +1,4 @@
+import re
 from django.conf import settings
 from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
@@ -30,3 +31,21 @@ async def delete_old_messages(bot: Bot, chat_id: int, message_ids: list[int]):
                 chat_id=settings.SUPERUSER_TELEGRAM_ID,
                 text=f"Kútilmegen qátelik: {e}"
             )
+
+
+
+def is_valid_full_name(text: str) -> bool:
+    if not re.match(r"^[A-Za-z\s'‘“áóǵńíúÁÓǴŃÍÚ]+$", text):
+        return False
+
+    words = text.strip().split()
+
+    if len(words) < 2:
+        return False
+    
+    for word in words:
+        clean_word = word.replace("'", "")
+        if len(clean_word) < 4:
+            return False
+
+    return True
