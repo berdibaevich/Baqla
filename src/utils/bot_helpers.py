@@ -40,7 +40,7 @@ def is_valid_full_name(text: str) -> bool:
 
     words = text.strip().split()
 
-    if len(words) < 2:
+    if len(words) != 2:
         return False
     
     for word in words:
