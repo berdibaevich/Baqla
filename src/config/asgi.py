@@ -8,6 +8,6 @@ django.setup()
 
 application = get_asgi_application()
 
-from apps.bot.loader import dp, setup_routers
+from bot.loader import dp, setup_routers
 
 setup_routers(dp)
