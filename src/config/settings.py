@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Project's Apps
-    "apps.users.apps.UsersConfig",
     "apps.students.apps.StudentsConfig",
 
 ]
@@ -78,7 +77,6 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "users.UserBase"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
