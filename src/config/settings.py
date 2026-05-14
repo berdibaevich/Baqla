@@ -25,6 +25,8 @@ REDIS_HOST = env("REDIS_HOST")
 REDIS_PORT = env.int("REDIS_PORT")
 REDIS_PASSWORD = env("REDIS_PASSWORD")
 
+GITHUB_TOKEN = env("GITHUB_TOKEN")
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +39,6 @@ INSTALLED_APPS = [
     # Project's Apps
     "apps.users.apps.UsersConfig",
     "apps.students.apps.StudentsConfig",
-    "apps.bot.apps.BotConfig",
 
 ]
 
