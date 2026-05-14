@@ -12,6 +12,7 @@ from ..states import StudentProfileStates
 from ..keyboards import get_select_groups_ik
 
 from apps.students.services import get_groups
+from utils import is_valid_full_name
 
 
 student_private_router = Router()
@@ -39,7 +40,6 @@ async def show_groups(query: CallbackQuery, state: FSMContext):
 
 
 
-
 @student_private_router.callback_query(
     GroupCbData.filter(
         F.action == UserAction.SELECT), 
@@ -57,3 +57,31 @@ async def handle_group_selection(query: CallbackQuery, callback_data: GroupCbDat
         parse_mode="HTML"
     )
     await query.answer()
+
+
+@student_private_router.message(StudentProfileStates.full_name)
+async def handle_full_name(message: Message, state: FSMContext):
+    full_name = message.text.strip()
+    
+    if not is_valid_full_name(full_name):
+        # data = await state.get_data()
+
+        last_message = await message.answer(
+            (
+                "<b>Atińiz yamasa familiyańizda qáte barǵa usaydi.</b>\n\n"
+                "<b>Esletpe: Tek latin háriplerinen paydalaniń\nMisali: Jetkerbay Kenesbayev.</b>"
+            ),
+            parse_mode="HTML"
+        )
+        #await state.update_data(message_ids=[sent_msg.message_id])
+        return
+
+    await state.update_data(full_name=full_name)
+    await state.set_state(StudentProfileStates.github_username)
+
+    last_message = await message.answer(
+        (f"Ájayip, <b>{full_name}</b>!\n\n"
+        "Endi GitHub <b>Username</b> atińizdi kirgiziń:"),
+        parse_mode="HTML"
+    )
+
