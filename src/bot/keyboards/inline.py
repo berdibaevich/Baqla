@@ -4,7 +4,8 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from ..callback import (
     UserAction,
     RoleCbData,
-    GroupCbData
+    GroupCbData,
+    ProfileCbData
 )
 
 from ..utils import format_group_name
@@ -37,3 +38,19 @@ def get_select_groups_ik(list_groups: list) -> InlineKeyboardMarkup:
     builder.adjust(1)
     return builder.as_markup()
 
+
+
+def confirm_profile_ik() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    
+    builder.button(
+        text="✅ Jiberiw",
+        callback_data=ProfileCbData(action=UserAction.CONFIRM),
+    )
+    builder.button(
+        text="🔄 Qayta toltiriw",
+        callback_data=ProfileCbData(action=UserAction.REFILL),
+    )
+
+    builder.adjust(2)
+    return builder.as_markup()

@@ -4,6 +4,9 @@ from aiogram.filters.callback_data import CallbackData
 
 class UserAction(Enum):
     SELECT = "select"
+    CONFIRM = "confirm"
+    REFILL = "refill"
+
 
 
 class RoleCbData(CallbackData, prefix="role"):
@@ -14,3 +17,7 @@ class RoleCbData(CallbackData, prefix="role"):
 class GroupCbData(CallbackData, prefix="group"):
     action: UserAction
     id: int
+
+
+class ProfileCbData(CallbackData, prefix="profile"):
+    action: UserAction
