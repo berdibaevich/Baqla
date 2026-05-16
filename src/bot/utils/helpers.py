@@ -1,0 +1,23 @@
+from django.conf import settings
+from aiogram import Bot
+from aiogram.exceptions import TelegramBadRequest
+
+
+
+async def delete_old_messages(bot: Bot, chat_id: int, message_ids: list[int]):
+    """
+        Delete old messages from spesific user's chat by IDs.
+    """
+    for msg_id in message_ids:
+        try:
+            await bot.delete_message(chat_id=chat_id, message_id=msg_id)
+        except TelegramBadRequest as e:
+            await bot.send_message(
+                chat_id=settings.SUPERUSER_TELEGRAM_ID,
+                text=f"Xabardi óshiriwde qátelik (ID: {msg_id}): \n\n{e}"
+            )
+        except Exception as e:
+            await bot.send_message(
+                chat_id=settings.SUPERUSER_TELEGRAM_ID,
+                text=f"Kútilmegen qátelik: {e}"
+            )
