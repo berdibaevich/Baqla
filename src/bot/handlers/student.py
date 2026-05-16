@@ -1,7 +1,7 @@
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.filters.command import Command
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, Contact
 
 from ..callback import (
     UserAction,
@@ -11,11 +11,17 @@ from ..callback import (
 from ..states import StudentProfileStates
 from ..keyboards import (
     get_select_groups_ik,
-    share_phone_kb
+    share_phone_kb,
+    confirm_profile_ik,
+    DELETE_REPLY_KEYBOARD
+)
+from ..utils import (
+    is_valid_full_name, 
+    validate_github_username,
+    format_profile
 )
 
 from apps.students.services import get_groups
-from utils.validators import validate_github_username, is_valid_full_name
 
 
 from integrations import github_service
@@ -123,3 +129,35 @@ async def handle_github_username(message: Message, state: FSMContext):
         reply_markup=share_phone_kb(),
         parse_mode="HTML",
     )
+
+
+
+@student_private_router.message(StudentProfileStates.phone_number, F.contact)
+async def handle_phone_contact(message: Message, state: FSMContext):
+    contact: Contact = message.contact
+
+    if contact.user_id != message.from_user.id:
+        await message.answer(
+            "❌ Múmkin bolsa, óz nomerińizdi bólisiń.",
+            reply_markup=share_phone_kb(),
+        )
+        return
+    
+    phone = contact.phone_number
+    if not phone.startswith("+"):
+        phone = "+" + phone
+    
+    await state.update_data(phone_number=phone)
+    await state.set_state(StudentProfileStates.confirm_profile)
+    data = await state.get_data()
+
+    await message.answer("✅", reply_markup=DELETE_REPLY_KEYBOARD)
+
+    await message.answer(
+        text=format_profile(data),
+        reply_markup=confirm_profile_ik(),
+        parse_mode="HTML"
+    )
+
+
+
