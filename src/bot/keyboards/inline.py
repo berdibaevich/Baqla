@@ -7,7 +7,7 @@ from ..callback import (
     GroupCbData
 )
 
-from utils import format_group_name
+from ..utils import format_group_name
 
 
 def get_student_reg_ik() -> InlineKeyboardMarkup:
