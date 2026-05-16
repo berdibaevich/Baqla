@@ -9,10 +9,16 @@ from ..callback import (
     GroupCbData
 )
 from ..states import StudentProfileStates
-from ..keyboards import get_select_groups_ik
+from ..keyboards import (
+    get_select_groups_ik,
+    share_phone_kb
+)
 
 from apps.students.services import get_groups
-from utils import is_valid_full_name
+from utils.validators import validate_github_username, is_valid_full_name
+
+
+from integrations import github_service
 
 
 student_private_router = Router()
@@ -85,3 +91,35 @@ async def handle_full_name(message: Message, state: FSMContext):
         parse_mode="HTML"
     )
 
+
+
+@student_private_router.message(StudentProfileStates.github_username)
+async def handle_github_username(message: Message, state: FSMContext):
+    github_username = message.text.strip()
+
+    if not validate_github_username(github_username):
+        await message.answer(
+            "GitHub username tek hárip, san hám <code>-</code> boliwi kerek.",
+            parse_mode="HTML"
+        )
+        return
+
+
+    exists = await github_service.check_user_exists(github_username)
+    if not exists:
+        await message.answer(
+            f"❌ <code>{github_username}</code> GitHub ta tabilmadi.\n\n"
+            "Duris username kirgiziń.",
+            parse_mode="HTML"
+        )
+        return        
+        
+    await state.update_data(github_username=github_username)
+    await state.set_state(StudentProfileStates.phone_number)
+
+    await message.answer(
+        f"✅ GitHub tabildi: <b>@{github_username}</b>\n\n"
+        "Telefon nomerińizdi jiberiń:",
+        reply_markup=share_phone_kb(),
+        parse_mode="HTML",
+    )
