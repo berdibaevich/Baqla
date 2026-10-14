@@ -2,7 +2,7 @@ from django.conf import settings
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import RedisStorage
 
-from utils.aredis_service import get_async_redis_client
+from src.utils.aredis_service import get_async_redis_client
 
 
 storage = RedisStorage(redis=get_async_redis_client(6))
