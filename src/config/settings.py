@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Project's Apps
-    "apps.students.apps.StudentsConfig",
+    "apps.accounts.apps.AccountsConfig",
 
 ]
 
