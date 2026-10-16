@@ -15,3 +15,18 @@ class Role(models.TextChoices):
     STUDENT = 'STUDENT', _('Student')
     PARENT = 'PARENT', _('Parent')
     PENDING = 'PENDING', _('Pending / Unverified')
+
+
+
+class DayType(models.TextChoices):
+    ODD_DAYS = 'ODD', _('Odd Days (Mon/Wed/Fri)')
+    EVEN_DAYS = 'EVEN', _('Even Days (Tue/Thu/Sat)')
+
+
+
+class TimeSlot(models.TextChoices):
+    MORNING_1 = '09:00', '09:00'
+    MORNING_2 = '11:00', '11:00'
+    AFTERNOON_1 = '14:00', '14:00'
+    AFTERNOON_2 = '16:00', '16:00'
+    EVENING_1 = '18:00', '18:00'

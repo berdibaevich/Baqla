@@ -1,10 +1,14 @@
 from .choices import (
     Gender,
-    Role
+    Role,
+    DayType,
+    TimeSlot
 )
 
 
 __all__ = (
     "Gender",
-    "Role"
+    "Role",
+    "DayType",
+    "TimeSlot"
 )
