@@ -1,8 +1,10 @@
 from .choices import (
-    Gender
+    Gender,
+    Role
 )
 
 
 __all__ = (
     "Gender",
+    "Role"
 )
