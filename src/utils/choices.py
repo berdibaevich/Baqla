@@ -30,3 +30,11 @@ class TimeSlot(models.TextChoices):
     AFTERNOON_1 = '14:00', '14:00'
     AFTERNOON_2 = '16:00', '16:00'
     EVENING_1 = '18:00', '18:00'
+
+
+
+class Status(models.TextChoices):
+    PENDING = 'pending', _('Pending')
+    APPROVED = 'approved', _('Approved')
+    REJECTED = 'rejected', _('Rejected')
+    DROPPED_OUT = 'dropped_out', _('Dropped Out') # Kurstan shıqqanlar (Qoyǵanlar)
