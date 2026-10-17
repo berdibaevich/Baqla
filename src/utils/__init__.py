@@ -7,6 +7,7 @@ from .choices import (
     RelationshipType
 )
 
+from .aredis import get_async_redis_client
 
 __all__ = (
     "Gender",
@@ -14,5 +15,6 @@ __all__ = (
     "DayType",
     "TimeSlot",
     "Status",
-    "RelationshipType"
+    "RelationshipType",
+    "get_async_redis_client"
 )
