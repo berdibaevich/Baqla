@@ -38,3 +38,10 @@ class Status(models.TextChoices):
     APPROVED = 'approved', _('Approved')
     REJECTED = 'rejected', _('Rejected')
     DROPPED_OUT = 'dropped_out', _('Dropped Out') # Kurstan shıqqanlar (Qoyǵanlar)
+
+
+
+class RelationshipType(models.TextChoices):
+    FATHER = 'FATHER', _('Father')
+    MOTHER = 'MOTHER', _('Mother')
+    GUARDIAN = 'GUARDIAN', _('Guardian')

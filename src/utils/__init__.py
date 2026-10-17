@@ -3,7 +3,8 @@ from .choices import (
     Role,
     DayType,
     TimeSlot,
-    Status
+    Status,
+    RelationshipType
 )
 
 
@@ -12,5 +13,6 @@ __all__ = (
     "Role",
     "DayType",
     "TimeSlot",
-    "Status"
+    "Status",
+    "RelationshipType"
 )
