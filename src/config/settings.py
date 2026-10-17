@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # Project's Apps
     "src.apps.accounts.apps.AccountsConfig",
     "src.apps.academy.apps.AcademyConfig",
+    "src.apps.bot.apps.BotConfig",
 ]
 
 MIDDLEWARE = [
