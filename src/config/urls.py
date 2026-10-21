@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from src.bot import webhook
+from src.apps.bot import webhook
 
 
 urlpatterns = [
