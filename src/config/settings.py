@@ -7,6 +7,7 @@ env = environ.Env(
 )
 
 # uv run uvicorn src.config.asgi:application --reload
+# https://web.telegram.org/a/
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR.parent, ".envs", ".env.local"))
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'src.config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "assets/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
