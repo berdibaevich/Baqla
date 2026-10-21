@@ -30,6 +30,12 @@ class Command(BaseCommand):
         if options["set"]:
             self._set(base_url=base_url, token=token, domain=domain)
 
+        elif options["info"]:
+            self._info(base_url=base_url)
+
+        elif options["delete"]:
+            self._delete(base_url=base_url)
+
 
     def _set(self, base_url: str, token: str, domain: str) -> None:
         webhook_url = f"{domain}/webhook/{token}/"
@@ -49,6 +55,35 @@ class Command(BaseCommand):
             ))
         else:
             raise CommandError(f"Failed: {r.get('description')}")
+
+
+
+    def _info(self, base_url: str) -> None:
+        r = self._request(f"{base_url}/getWebhookInfo")
+
+        if not r.get("ok"):
+            raise CommandError(f"Failed: {r.get("description")}")
+
+        result = r.get("result", {})
+
+        self.stdout.write("\nWebhook info:")
+        self.stdout.write(f"- URL:             {result.get('url' or 'not set')}")
+        self.stdout.write(f"- Pending updates: {result.get('pending_update_count' or 0)}")
+        self.stdout.write(f"- Max connections: {result.get('max_connections' or '-')}")
+        self.stdout.write(f"- Last error:      {result.get('last_error_message' or '-')}")
+
+
+
+    def _delete(self, base_url: str) -> None:
+        r = self._request(
+            f"{base_url}/deleteWebhook",
+            params={"drop_pending_updates": True},
+        )
+
+        if r.get("ok"):
+            self.stdout.write(self.style.SUCCESS("Webhook deleted successfully."))
+        else:
+            raise CommandError(f"Failed: {r.get("description")}")
 
 
 
