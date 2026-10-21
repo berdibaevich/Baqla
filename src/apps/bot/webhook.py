@@ -12,7 +12,7 @@ async def handle_webhook(request: HttpRequest):
     if request.method != 'POST':
         return HttpResponse("Method Not Allowed", status=405)
 
-    url = request.build_absolute_uri()
+    url = request.build_absolute_uri().rstrip("/")
     index = url.rfind("/")
     token = url[index+1:]
 
@@ -31,7 +31,7 @@ async def handle_webhook(request: HttpRequest):
 @csrf_exempt
 def telegram(request: HttpRequest):
     try:
-        response = async_to_sync(handle_webhook)(req=request)
+        response = async_to_sync(handle_webhook)(request=request)
         return response
     except Exception as e:
         return HttpResponse("OK", status=200)

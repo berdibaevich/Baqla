@@ -6,7 +6,7 @@ env = environ.Env(
     DEBUG=(bool, False),
 )
 
-# uv run uvicorn config.asgi:application --reload
+# uv run uvicorn src.config.asgi:application --reload
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR.parent, ".envs", ".env.local"))
@@ -18,7 +18,7 @@ SUPERUSER_TELEGRAM_ID = env.int("SUPERUSER_TELEGRAM_ID")
 
 WEBHOOK_HOST = env("WEBHOOK_HOST")
 BOT_TOKEN = env("BOT_TOKEN")
-WEBHOOK_PATH = f"webhook/{BOT_TOKEN}"
+WEBHOOK_PATH = f"webhook/{BOT_TOKEN}/"
 WEBHOOK_URL = WEBHOOK_HOST + "/" + WEBHOOK_PATH
 
 REDIS_HOST = env("REDIS_HOST")
