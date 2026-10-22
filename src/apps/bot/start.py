@@ -10,6 +10,6 @@ router = Router()
 async def cmd_start(message: Message):
     text = (
         "<b>Assalawma aleykum!</b>\n\n"
-        "Baqla botqa xosh keldińiz. ✨")
+        "Tómendegi <b>Baqla</b> túymesi arqali kiriwińiz múmkin.")
     
     await message.answer(text=text, parse_mode="HTML")
