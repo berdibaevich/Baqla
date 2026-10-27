@@ -46,6 +46,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     
     # STATUS OF USER
     is_active = models.BooleanField(default=False)
+    is_blocked = models.BooleanField(_("Is Blocked"), default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_verified = models.BooleanField(_("Is Verified"), default=False) # Will be verified by mentor
