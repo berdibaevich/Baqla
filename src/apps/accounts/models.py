@@ -12,18 +12,22 @@ from ...utils import Role
 
 class UserBaseManager(BaseUserManager):
     """Manager"""
-    def create_superuser(self, phone_number, password, **other_fields):
+    def create_superuser(self, phone_number, full_name, password, **other_fields):
         other_fields.setdefault("is_staff", True)
         other_fields.setdefault("is_superuser", True)
         other_fields.setdefault("is_verified", True)
         other_fields.setdefault("role", Role.ADMIN)
 
         if not phone_number:
-            raise ValueError("Superuser must add phone number!")
+            raise ValueError("Failed: Phone number is required")
+
+        if not full_name:
+            raise ValueError("Failed: Full name is required")
 
         user = self.model(
             telegram_id=settings.SUPERUSER_TELEGRAM_ID,
             phone_number=phone_number,
+            full_name = full_name,
             **other_fields
         )
         user.set_password(password)
@@ -53,7 +57,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['full_name']
 
     objects = UserBaseManager()
 
