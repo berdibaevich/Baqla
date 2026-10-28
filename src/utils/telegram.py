@@ -1,74 +1,66 @@
 import hmac
 import hashlib
 import time
+import json
 from urllib.parse import parse_qs, unquote
 from django.conf import settings
 
 
-MAX_AGE_SECONDS = 300 # 5 minutes
+MAX_AGE = 300 # seconds
 
 
 
-def verify_init_data(init_data: str) -> dict:
+def parse_init_data(init_data: str) -> dict | None:
     try:
         # Parse init_data
-        parsed = parse_qs(init_data)
+        parsed = parse_qs(init_data, keep_blank_values=True)
         received_hash = parsed.pop('hash', [None])[0]
 
         if not received_hash:
-            return {
-                'valid': False, 
-                'message': 'Ошибка авторизации. Пожалуйста, запустите приложение заново из Telegram.'
-            }
+            return None
 
         auth_date = parsed.get('auth_date', [None])[0]
         if not auth_date:
-            return {
-                'valid': False,
-                'message': 'Данные авторизации неполные.'
-            }
+            None
 
         current_time = int(time.time())
         auth_timestamp = int(auth_date)
 
-        if current_time - auth_timestamp > MAX_AGE_SECONDS:
-            return {
-                'valid': False,
-                'message': 'Сессия истекла. Пожалуйста, перезапустите приложение.'
-            }
+        if current_time - auth_timestamp > MAX_AGE:
+            return None
 
         # Create data-check-string
         data_check_arr = [f"{k}={unquote(v[0])}" for k, v in sorted(parsed.items())]
         data_check_string = '\n'.join(data_check_arr)
 
-        # Secret key = HMAC-SHA-256(BOT_TOKEN, "WebAppData")
-
-        secret_key = hmac.new(
+        # HMAC-SHA256 verify
+        secret = hmac.new(
             key=b"WebAppData",
             msg=settings.BOT_TOKEN.encode(),
             digestmod=hashlib.sha256
         ).digest()
 
-        calculated_hash = hmac.new(
-            key=secret_key,
+        expected = hmac.new(
+            key=secret,
             msg=data_check_string.encode(),
             digestmod=hashlib.sha256
         ).hexdigest()
 
+        if not hmac.compare_digest(expected, received_hash):
+            return None
 
-        if calculated_hash != received_hash:
-            return {
-                'valid': False,
-                'message': 'Не удалось подтвердить безопасность сессии. Перезапустите приложение.'
-            }
+        # Parse user object
+        raw_user = json.loads(unquote(parsed.get("user", ["{}"])[0]))
+        first = raw_user.get("first_name", "")
+        last = raw_user.get("last_name", "")
 
-        return {'valid': True, 'message': 'Ok'}
+        return {
+            "telegram_id": raw_user["id"],
+            "full_name": f"{first} {last}".strip(),
+            "photo_url": raw_user.get("photo_url"),
+        }
 
 
     except Exception as e:
-        print(f"Verify init data error: {e}")
-        return {
-            'valid': False, 
-            'message': 'Maǵliwmatlardi tekseriwdegi texnikaliq qáte. Keyinirek qayta uriniń.'
-        }
-
+        print(f"parse_init_data error: {e}")
+        return None
