@@ -15,7 +15,6 @@ class UserBaseManager(BaseUserManager):
     def create_superuser(self, phone_number, password, **other_fields):
         other_fields.setdefault("is_staff", True)
         other_fields.setdefault("is_superuser", True)
-        other_fields.setdefault("is_active", True)
         other_fields.setdefault("is_verified", True)
         other_fields.setdefault("role", Role.ADMIN)
 
@@ -45,8 +44,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     )
     
     # STATUS OF USER
-    is_active = models.BooleanField(default=False)
-    is_blocked = models.BooleanField(_("Is Blocked"), default=False)
+    is_active = models.BooleanField(default=True) # If False, so was blocked
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_verified = models.BooleanField(_("Is Verified"), default=False) # Will be verified by mentor
