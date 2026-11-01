@@ -3,10 +3,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from src.utils import (
-    parse_init_data
+    parse_init_data,
+    Role
 )
 from .services import get_or_create_user
 
+
+ROLE_REDIRECTS = {
+    Role.STUDENT: "/webapp/student/",
+    Role.PARENT: "/webapp/parent/",
+    Role.MENTOR: "/webapp/mentor/"
+}
 
 
 @csrf_exempt
@@ -30,8 +37,13 @@ def webapp_auth(request):
 
     user, is_new = get_or_create_user(tg_user)
 
-    print("user: ", user)
-    print("is_new: ", is_new)
+    if not user.is_active:
+        return JsonResponse({"error": "blocked"}, status=403)
 
+    # Redirect
+    if is_new or not user.is_verified:
+        redirect_url = "/webapp/register/"
+    else:
+        redirect_url = ROLE_REDIRECTS.get(user.role, "/webapp/register/")
 
-    return JsonResponse({"success": 200})
+    return JsonResponse({"redirect": redirect_url})
