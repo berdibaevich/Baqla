@@ -1,5 +1,6 @@
 
 const telegram = window.Telegram.WebApp;
+telegram.ready();
 
 
 async function authAndRedirect() {
@@ -13,6 +14,10 @@ async function authAndRedirect() {
         const data = await response.json();
 
         console.log("data: ", data)
+        console.log("data.redirect: ", data.redirect)
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        }
 
     } catch {
         console.log("SomeThing Wrong")

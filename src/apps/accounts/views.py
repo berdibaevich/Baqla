@@ -1,4 +1,5 @@
 import json
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
@@ -47,3 +48,8 @@ def webapp_auth(request):
         redirect_url = ROLE_REDIRECTS.get(user.role, "/webapp/register/")
 
     return JsonResponse({"redirect": redirect_url})
+
+
+
+def register(request):
+    return render(request, 'academy/register.html')
