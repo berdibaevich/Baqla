@@ -44,4 +44,4 @@ class Status(models.TextChoices):
 class RelationshipType(models.TextChoices):
     FATHER = 'FATHER', _('Father')
     MOTHER = 'MOTHER', _('Mother')
-    GUARDIAN = 'GUARDIAN', _('Guardian')
+    OTHER = 'OTHER', _('Other')
