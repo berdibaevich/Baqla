@@ -1,6 +1,4 @@
 *{
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
 }
@@ -9,4 +7,13 @@
 html, body {
     background-color: #ffffff !important;
     color: #000000 !important;
+}
+
+.berdime-btn{
+    background-color: #ffb200;
+    color: #000000;
+    padding: 6px 13px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 700;
 }
