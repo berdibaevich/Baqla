@@ -1,41 +1,50 @@
 {% extends 'academy/base.html' %}
+{% load static %}
 
 {% block title %}Register{% endblock %}
 
 {% block content %}
-  <h2>Dizimnen ótiw</h2>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
 
-  <form id="reg">
-    <div class="step" data-step="1">
-      <p>1/4 — Sabaq waqti</p>
+  <h2>Dizimnen ótiw</h2>
+  <div class="progress">
+    <div id="progress-bar"></div>
+    <span id="progress-label"></span>
+  </div>
+
+  <form id="student-reg" method="post">
+    {% csrf_token %}
+
+    <div class="step" hidden>
+      <p class="step-title">Sabaq waqti</p>
       {{ form.days.label_tag }} {{ form.days }}<br><br>
       {{ form.time.label_tag }} {{ form.time }}<br><br>
       <button type="button" class="next berdime-btn">Keyingi</button>
     </div>
 
-    <div class="step" data-step="2" hidden>
-      <p>2/4 — Maǵliwmatlarińiz</p>
+    <div class="step" hidden>
+      <p class="step-title">Maǵliwmatlarińiz</p>
       {{ form.full_name.label_tag }} {{ form.full_name }}<br><br>
       {{ form.github_username.label_tag }} {{ form.github_username }}
+      <div id="gh-loader" class="loader" hidden><span></span></div>
       <small id="gh-status"></small><br><br>
       <button type="button" class="back berdime-btn">Artqa</button>
-      <button type="button" class="next berdime-btn">Keyingi</button>
+      <button type="button" class="next berdime-btn" id="gh-next">Keyingi</button>
     </div>
 
-    <div class="step" data-step="3" hidden>
-      <p>3/4 — Ata-ana</p>
+    <div class="step" hidden>
+      <p class="step-title">Ata-ana</p>
       {{ form.relationship.label_tag }} {{ form.relationship }}<br><br>
       {{ form.parent_name.label_tag }} {{ form.parent_name }}<br><br>
       {{ form.parent_phone.label_tag }} {{ form.parent_phone }}<br><br>
       <button type="button" class="back berdime-btn">Artqa</button>
       <button type="submit">Jiberiw</button>
     </div>
-
-    <div class="step" data-step="4" hidden>
-      <p>4/4 — Ata-anani mirát etiw</p>
-      <button type="button" id="share">Telegram arqali jiberiw</button>
-    </div>
-
-    <p id="error" style="color:red"></p>
+    {{ form.errors }}
   </form>
+{% endblock %}
+
+
+{% block extra_js %}
+  <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
