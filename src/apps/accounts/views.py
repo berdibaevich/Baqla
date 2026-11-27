@@ -1,3 +1,4 @@
+import re
 import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -8,6 +9,10 @@ from src.utils import (
     Role
 )
 from .services import get_or_create_user
+from .forms import StudentRegisterForm
+
+from src.integrations import github_service, GitHubError
+
 
 
 ROLE_REDIRECTS = {
@@ -15,6 +20,8 @@ ROLE_REDIRECTS = {
     Role.PARENT: "/webapp/parent/",
     Role.MENTOR: "/webapp/mentor/"
 }
+
+GH_USERNAME_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$")
 
 
 @csrf_exempt
@@ -46,10 +53,26 @@ def webapp_auth(request):
         redirect_url = "/webapp/register/"
     else:
         redirect_url = ROLE_REDIRECTS.get(user.role, "/webapp/register/")
-
+    print("redirect_url: ", redirect_url)
     return JsonResponse({"redirect": redirect_url})
 
 
 
 def register(request):
-    return render(request, 'academy/register.html')
+    form = StudentRegisterForm()
+    return render(request, 'academy/register.html', {'form': form})
+
+
+
+async def check_github(request):
+    username = request.GET.get("username", "").strip()
+
+    if not GH_USERNAME_RE.match(username):
+        return JsonResponse({"exists": False, "error": "invalid"})
+
+    try:
+        exists = await github_service.check_user_exists(username)
+    except GitHubError:
+        return JsonResponse({"exists": False, "error": "unavailable"}, status=502)
+
+    return JsonResponse({'exists': exists})

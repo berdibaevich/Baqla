@@ -4,7 +4,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 from src.apps.bot import webhook
-from src.apps.accounts.views import webapp_auth, register
+from src.apps.accounts.views import (
+    webapp_auth, 
+    register,
+    check_github
+)
 
 
 urlpatterns = [
@@ -12,6 +16,7 @@ urlpatterns = [
     path(settings.WEBHOOK_PATH, webhook.telegram, name="tg_webhook"),
     path('webapp/auth/', webapp_auth, name='webapp_auth'),
     path('webapp/register/', register, name='register'),
+    path('webapp/check-github/', check_github, name='check_github'),
 
     path("", include("src.apps.academy.urls"), name="academy"),
 ]
