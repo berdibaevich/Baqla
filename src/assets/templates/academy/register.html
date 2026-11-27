@@ -38,46 +38,4 @@
 
     <p id="error" style="color:red"></p>
   </form>
-
-
-<script>
-const tg = window.Telegram.WebApp;
-tg.ready();
-
-const steps = [...document.querySelectorAll(".step")];
-let cur = 0, inviteLink = "";
-const show = i => { cur = i; steps.forEach((s, k) => s.hidden = k !== i); };
-
-document.querySelectorAll(".next").forEach(b => b.onclick = async () => {
-  if (cur === 1) {                       // GitHub tekshiruv
-    const u = document.getElementById("id_github_username").value.trim();
-    const st = document.getElementById("gh-status");
-    st.textContent = "Tekserilmekte...";
-    const r = await fetch(`/webapp/check-github/?username=${encodeURIComponent(u)}`);
-    if (!(await r.json()).exists) { st.textContent = "Topilmadi"; return; }
-    st.textContent = "OK";
-  }
-  show(cur + 1);
-});
-document.querySelectorAll(".back").forEach(b => b.onclick = () => show(cur - 1));
-
-document.getElementById("reg").onsubmit = async e => {
-  e.preventDefault();
-  const fd = new FormData(e.target);
-  fd.append("initData", tg.initData);
-  const r = await fetch("/webapp/register/", { method: "POST", body: fd });
-  const j = await r.json();
-  if (!r.ok) { document.getElementById("error").textContent = JSON.stringify(j.errors || j); return; }
-  inviteLink = j.invite_link;
-  show(3);
-};
-
-document.getElementById("share").onclick = () => {
-  const text = "Farzandingiz o'quv markazda ro'yxatdan o'tdi. Botga ulaning:";
-  tg.openTelegramLink(
-    `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(text)}`
-  );
-};
-</script>
-
 {% endblock %}
