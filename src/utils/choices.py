@@ -45,3 +45,23 @@ class RelationshipType(models.TextChoices):
     FATHER = 'FATHER', _('Father')
     MOTHER = 'MOTHER', _('Mother')
     OTHER = 'OTHER', _('Other')
+
+
+DAY_LABELS_KAA = {
+    DayType.ODD_DAYS: "Taq kúnler",
+    DayType.EVEN_DAYS: "Jup kúnler",
+}
+
+
+RELATIONSHIP_LABELS_KAA = {
+    RelationshipType.FATHER: "Ákesi",
+    RelationshipType.MOTHER: "Anasi",
+    RelationshipType.OTHER: "Basqa",
+}
+
+
+PARENT_PLACEHOLDERS_KAA = {
+    RelationshipType.FATHER: "Berdibay",
+    RelationshipType.MOTHER: "Aynura",
+    RelationshipType.OTHER: "Ati (aǵam / ájapam / atam / apam)"
+}
