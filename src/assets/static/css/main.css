@@ -15,5 +15,13 @@ html, body {
     padding: 6px 13px;
     border: none;
     border-radius: 7px;
-    font-weight: 700;
+    font-weight: 600;
+}
+
+
+select, input {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ced4da;
+    color-scheme: light;
 }
