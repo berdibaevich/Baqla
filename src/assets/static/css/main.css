@@ -18,10 +18,20 @@ html, body {
     font-weight: 600;
 }
 
+.berdime-send-btn{
+    background-color: #006f4c;
+    color: #ffffff;
+    padding: 6px 13px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
 
 select, input {
     background-color: #ffffff;
     color: #000000;
     border: 1px solid #ced4da;
     color-scheme: light;
+    font-family: inherit;
 }
