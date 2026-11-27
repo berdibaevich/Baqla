@@ -1,0 +1,59 @@
+.progress {
+  position: relative;
+  height: 23px;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0;
+  background: #ffb200;
+  transition: width .3s ease;
+}
+
+#progress-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, .8);
+}
+
+.loader {
+  height: 3px;
+  margin-top: 4px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader span {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  background: var(--tg-theme-button-color, #2481cc);
+  animation: slide 1s infinite ease-in-out;
+}
+
+.step-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 18px 0 16px;
+  line-height: 1.2;
+}
+
+@keyframes slide {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}
+
+#gh-status.ok  { color: green; }
+#gh-status.bad { color: red; }
