@@ -7,17 +7,20 @@ class GitHubError(Exception):
 
 
 class GitHubService:
-    def __init__(self):
-        self.base_url = "https://api.github.com"
-        self.headers = {
+    base_url = "https://api.github.com"
+    timeout = 5
+
+    @property
+    def headers(self) -> dict:
+        return {
             "Authorization": f"Bearer {settings.GITHUB_TOKEN}",
             "Accept": "application/vnd.github.v3+json"
         }
-        
+
 
     async def get_user_info(self, username: str) -> dict | None:
         try:
-            async with httpx.AsyncClient(timeout=5) as client:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
                 r = await client.get(
                     f"{self.base_url}/users/{username}", 
                     headers=self.headers
