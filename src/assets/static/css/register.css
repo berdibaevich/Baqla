@@ -1,7 +1,7 @@
 .progress {
   position: relative;
   height: 23px;
-  background: #000;
+  background: #1e293b;
   border-radius: 14px;
   overflow: hidden;
   margin: 10px 0;
@@ -10,7 +10,7 @@
 #progress-bar {
   height: 100%;
   width: 0;
-  background: #ffb200;
+  background: #006f4c;
   transition: width .3s ease;
 }
 
